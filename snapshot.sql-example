@@ -1,0 +1,108 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.11
+-- Dumped by pg_dump version 12.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+--
+-- Name: cc_species; Type: TABLE; Schema: public; Owner: XXXXXX
+--
+
+CREATE TABLE public.cc_species (
+    cc_specie character varying(20) NOT NULL,
+    cc_family character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.cc_species OWNER TO "XXXXXX";
+
+--
+-- Data for Name: cc_species; Type: TABLE DATA; Schema: public; Owner: XXXXXX
+--
+
+COPY public.cc_species (cc_specie, cc_family) FROM stdin;
+Annual Ryegrass	Grasses
+Sudan grass	Grasses
+Rape/Canola	Broadleaves
+Cereal Rye	Grasses
+Winter Rye	Grasses
+Triticale	Grasses
+Oats	Grasses
+Crimson Clover	Legumes
+Red Clover	Legumes
+White Clover	Legumes
+Unknown Clover spp	Legumes
+Hairy Vetch	Legumes
+Woolypod Vetch	Legumes
+Crown Vetch	Legumes
+Unknown Vetch spp	Legumes
+Radish/Turnip	Broadleaves
+Mustard	Broadleaves
+Winter Peas	Legumes
+Alfalfa	Legumes
+Kale	Broadleaves
+Wheat	Grasses
+Barley	Grasses
+White Cahaba Vetch	Legumes
+Other	Other
+\.
+
+
+--
+-- Name: cc_species cc_species_pkey; Type: CONSTRAINT; Schema: public; Owner: XXXXXX
+--
+
+ALTER TABLE ONLY public.cc_species
+    ADD CONSTRAINT cc_species_pkey PRIMARY KEY (cc_specie);
+
+
+--
+-- Name: cc_species cc_species_cc_family_fkey; Type: FK CONSTRAINT; Schema: public; Owner: XXXXXX
+--
+
+ALTER TABLE ONLY public.cc_species
+    ADD CONSTRAINT cc_species_cc_family_fkey FOREIGN KEY (cc_family) REFERENCES public.cc_families(cc_family) MATCH FULL DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: TABLE cc_species; Type: ACL; Schema: public; Owner: XXXXXX
+--
+
+GRANT SELECT ON TABLE public.cc_species TO YYYYYY;
+GRANT SELECT ON TABLE public.cc_species TO ZZZZZZ;
+
+
+--
+-- Name: TABLE pg_buffercache; Type: ACL; Schema: public; Owner: WWWWWW
+--
+
+GRANT SELECT ON TABLE public.pg_buffercache TO YYYYYY;
+GRANT SELECT ON TABLE public.pg_buffercache TO ZZZZZZ;
+
+
+--
+-- Name: TABLE pg_stat_statements; Type: ACL; Schema: public; Owner: WWWWWW
+--
+
+GRANT SELECT ON TABLE public.pg_stat_statements TO YYYYYY;
+GRANT SELECT ON TABLE public.pg_stat_statements TO ZZZZZZ;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
