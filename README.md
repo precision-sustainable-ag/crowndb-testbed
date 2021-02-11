@@ -45,7 +45,7 @@ To build an image, you need to have `docker` installed on your local machine.
 
 3. Fetch a new snapshot to build an image from. To do this, you need to get the `conninfo` string of the database. It looks like this: 
     
-       "host=crown***.postgres.database.***.net port=5432 dbname=crowndb user=*** password=*** sslmode=require"
+       "host=crown***.postgres.database.***.net port=5432 dbname=crowndb user=***@domain password=*** sslmode=require"
    > Note: this is the same string that you use to open the DB from the command line: `psql "CONNINFO_STRING"`
 
    The command you run to take your snapshot depends on what you want it to include. In any case, you want to execute it from a shell in the folder of this repository. For the "light" version (~a few MB, excludes sensor and weather data), use:
@@ -90,9 +90,9 @@ To build an image, you need to have `docker` installed on your local machine.
 
     > Warning: The `-d` flag is "detached mode", which means it won't spawn a new terminal window, and you can only see the container through the port or with `docker ps` or the desktop dashboard. If you need to touch the command line inside the container that's running the DB (***you shouldn't!***) you can SSH in or use the desktop client to spawn one.
 
-3. Now you can use your usual methods of connecting to the DB and sending SQL statements, whether from an environment like `node.js`, or a GUI like DBeaver, or the command line via `psql`. You only need to replace the remote host in the production `conninfo` string with `localhost` and the port with `2345`:
+3. Now you can use your usual methods of connecting to the DB and sending SQL statements, whether from an environment like `node.js`, or a GUI like DBeaver, or the command line via `psql`. You need to replace the remote host in the production `conninfo` string with `localhost`, the port with `2345`, remove the `@domain` part of the username, and turn off the SSL requirement:
 
-       "host=localhost port=2345 dbname=crowndb user=*** password=*** sslmode=require"
+       "host=localhost port=2345 dbname=crowndb user=*** password=***"
 
 4. Once you have run a set of statements that constitute a test, you can now rewind to the untouched snapshot of the DB by stopping and removing the container:
 
