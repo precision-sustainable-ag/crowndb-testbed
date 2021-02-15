@@ -1,9 +1,10 @@
 FROM postgres:10
 
-ENV POSTGRES_USER thecrowndbadminusername
-ENV POSTGRES_PASSWORD thecrowndbadminuserpassword
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD asecretpassword
 ENV POSTGRES_DB crowndb
 
+COPY globals.sql /docker-entrypoint-initdb.d/ 
 COPY snapshot.sql /docker-entrypoint-initdb.d/
 
 

@@ -41,12 +41,12 @@ To build an image, you need to have `docker` installed on your local machine.
 
 1. Clone this repository so that you have the `Dockerfile-example` used for building.
 
-2. Edit the two `ENV` lines in the example dockerfile to be the actual username and password (no quotes), then save that copy as `Dockerfile`.
+2. Edit the `ENV` lines in the example dockerfile to be a new password, then save that copy as `Dockerfile`. You shouldn't need this password again (but you do have to provide one); it's the admin user for the whole PostgreSQL install on your new image. The usernames and passwords for the original DB will migrate over in a later step.
 
 3. Fetch a new snapshot to build an image from. To do this, you need to get the `conninfo` string of the database. It looks like this: 
     
        "host=crown***.postgres.database.***.net port=5432 dbname=crowndb user=***@domain password=*** sslmode=require"
-   > Note: this is the same string that you use to open the DB from the command line: `psql "CONNINFO_STRING"`
+   > Note: this is the same string that you use to open the DB from the command line: `psql "CONNINFO_STRING"`. Don't forget to include the quotes in the command.
 
    The command you run to take your snapshot depends on what you want it to include. In any case, you want to execute it from a shell in the folder of this repository. For the "light" version (~a few MB, excludes sensor and weather data), use:
 
@@ -62,13 +62,19 @@ To build an image, you need to have `docker` installed on your local machine.
 
 4. Now that you have an image, you should check that the correct filename is in the `COPY` statement of the dockerfile. If you didn't change it in the commands in Step 2, they should match. The `snapshot.sql` file should be in the same folder as `Dockerfile`.
 
-5. Now you can build an image from these SQL statements and the Dockerfile. Run this command from this folder:
+5. In addition to the schema and data stored in the actual DB, you need a file that makes the users and their permissions to access. Run this command:
+
+       pg_dumpall --dbname="CONNINFO_STRING" --globals-only --file=globals.sql
+
+   This file won't change from snapshot to snapshot unless users are changed. Make sure you use the same filename as the `COPY` statement in the dockerfile, just like above.
+
+6. Now you can build an image from these SQL statements and the Dockerfile. Run this command from this folder:
 
        docker build -t psadbimgs.azurecr.us/crowndb-snapshot:2021.02.01 .
        
     > Note the period at the end of the command! That's the path to the current folder. Also make sure to update the version tag with the date of your snapshot, in the `YYYY.MM.DD` format.
 
-6. You can now run your image locally (see below). You should also upload it to our container registry.
+7. You can now run your image locally (see below). You should also upload it to our container registry.
 
        docker push psadbimgs.azurecr.us/crowndb-snapshot:2021.02.01
 
