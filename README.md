@@ -60,7 +60,7 @@ To build an image, you need to have `docker` installed on your local machine.
 
        pg_dump --dbname="CONNINFO_STRING" --exclude-table=rainfall --exclude-table=ssurgo --exclude-table=weather --file=snapshot.sql
 
-4. Now that you have an image, you should check that the correct filename is in the `COPY` statement of the dockerfile. If you didn't change it in the commands in Step 2, they should match. The `snapshot.sql` file should be in the same folder as `Dockerfile`.
+4. Now that you have an image, you should check that the correct filename is in the `COPY` statement of the dockerfile. If you didn't change it in the commands in Step 2, they should match. The `snapshot.sql` file should be in the same folder as `Dockerfile` (you may need to find and replace all instances of CROWNadmin with postgres in snapshot.sql)
 
 5. In addition to the schema and data stored in the actual DB, you need a file that makes the users and their permissions to access. Run this command:
 
