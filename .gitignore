@@ -49,7 +49,11 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux
 
 # Prevent the live Dockerfile with passwords getting out
-Dockerfile
+# Dockerfile
 
 # Prevent a dumpfile with our data from getting out
 *.sql
+
+.env
+remake.ps1
+remake.sh
